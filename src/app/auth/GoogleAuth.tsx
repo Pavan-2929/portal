@@ -1,41 +1,46 @@
 "use client";
 
-import LoadingButton from "@/components/common/LoadingButton";
+import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { Loader2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 
 const GoogleAuth = () => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleGoogleAuth = async () => {
-    await authClient.signIn.social(
-      {
+    setLoading(true);
+    try {
+      const result = await authClient.signIn.social({
         provider: "google",
-      },
-      {
-        onRequest: () => {
-          setLoading(true);
-        },
-        onSuccess: () => {
-          setLoading(false);
-        },
-        onError: (ctx) => {
-          setLoading(false);
-          console.error(ctx.error.message);
-        },
-      },
-    );
+      });
+
+      console.log(result);
+
+      router.push("/");
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <LoadingButton
-      loading={loading}
+    <Button
       onClick={handleGoogleAuth}
-      className="gap-5"
+      disabled={loading}
+      className="flex items-center gap-3"
     >
-      <FaGoogle className="size-4" />
-      Login with Google
-    </LoadingButton>
+      {loading ? (
+        <Loader2Icon className="text-muted-foreground size-4 animate-spin" />
+      ) : (
+        <FaGoogle className="text-muted-foreground size-4" />
+      )}
+      Sign In with Google
+    </Button>
   );
 };
 
