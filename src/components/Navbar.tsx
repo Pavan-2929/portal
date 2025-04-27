@@ -5,7 +5,7 @@ import ThemeToggler from "./ThemeToggler";
 
 const Navbar = () => {
   return (
-    <div className="sticky top-0 left-0 z-50 border border-b">
+    <div className="bg-background sticky top-0 left-0 z-50 border border-b">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-4 px-5 py-3 sm:gap-y-0">
         <div className="text-primary text-3xl font-bold">
           <Link href="/">Gandhinagar University</Link>

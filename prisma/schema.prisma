@@ -21,6 +21,46 @@ model User {
   @@map("users")
 }
 
+model Semester {
+  id      Int       @id @default(autoincrement())
+  number  Int       @unique
+  Subject Subject[]
+
+  @@map("semesters")
+}
+
+model Subject {
+  id         Int        @id @default(autoincrement())
+  name       String
+  code       Int
+  semesterId Int
+  semester   Semester   @relation(fields: [semesterId], references: [id])
+  Material   Material[]
+
+  @@map("subjects")
+}
+
+model Material {
+  id          Int          @id @default(autoincrement())
+  title       String
+  url         String
+  description String
+  subjectId   Int
+  subject     Subject      @relation(fields: [subjectId], references: [id])
+  type        MaterialType
+  createdAt   DateTime     @default(now())
+
+  @@map("materials")
+}
+
+enum MaterialType {
+  NOTES
+  SYLLABUS
+  BOOK
+  PREVIOUS_PAPER
+  OTHER
+}
+
 model Session {
   id        String   @id
   expiresAt DateTime

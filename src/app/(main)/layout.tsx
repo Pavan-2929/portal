@@ -13,12 +13,10 @@ export default async function RootLayout({
     redirect("/sign-in");
   }
   return (
-    <div className="flex min-h-screen">
-      <div className="flex w-full flex-col">
-        <Navbar />
-        <div className="mb-16 flex-1 space-y-10 p-5 md:p-7 md:pe-7 lg:pe-16">
-          {children}
-        </div>
+    <div className="flex min-h-screen flex-col">
+      <Navbar />
+      <div className="mx-auto flex w-full max-w-7xl grow gap-5 p-5 pt-10">
+        {children}
       </div>
     </div>
   );
