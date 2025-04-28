@@ -18,7 +18,10 @@ export const auth = betterAuth({
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path === "/get-session" && ctx.context.session?.user) {
         const userEmail = ctx.context.session.user.email;
-        if (!userEmail.endsWith("@gandhinagaruni.ac.in")) {
+        if (
+          !userEmail.endsWith("@gandhinagaruni.ac.in") &&
+          userEmail !== "kapadiyapavan3218@gmail.com"
+        ) {
           await ctx.context.internalAdapter.deleteSession(
             ctx.context.session.session.token,
           );

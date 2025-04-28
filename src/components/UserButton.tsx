@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import UserAvatar from "./common/UserAvatar";
 import Link from "next/link";
-import { LogOutIcon, UserIcon } from "lucide-react";
+import { LayoutDashboardIcon, LogOutIcon, UserIcon } from "lucide-react";
 import useSession from "@/utils/useSession";
 import { Skeleton } from "./ui/skeleton";
 import { authClient } from "@/lib/auth-client";
@@ -56,6 +56,15 @@ const UserButton = ({ className }: UserButtonProps) => {
             Profile
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        {user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && (
+          <Link href={`/admin`}>
+            <DropdownMenuItem>
+              <LayoutDashboardIcon className="mr-3 size-4" />
+              Admin
+            </DropdownMenuItem>
+          </Link>
+        )}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOutIcon className="mr-3 size-4" />
