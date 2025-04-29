@@ -15,11 +15,7 @@ export default async function RootLayout({
 
   if (user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     redirect("/");
-    }
-    
-  return (
-    <div className="flex min-h-screen flex-col">
-        {children}
-    </div>
-  );
+  }
+
+  return <div className="flex min-h-screen w-full flex-col">{children}</div>;
 }
