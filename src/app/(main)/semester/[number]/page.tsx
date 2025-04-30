@@ -21,37 +21,38 @@ import {
 import Link from "next/link";
 
 interface SemesterPageProps {
-  params: Promise<{ number: number }>;
+  params: {
+    number: number;
+  };
 }
 
 const SemesterPage = async ({ params }: SemesterPageProps) => {
-  const resolvedParams = await params;
-
   const subjects = await prisma.subject.findMany({
     where: {
-      semesterId: Number(resolvedParams.number),
+      semesterId: Number(params.number),
     },
     include: {
       Material: true,
     },
   });
 
-if (!subjects || subjects.length === 0) {
-  return (
-    <div className="flex h-[70vh] w-full flex-col items-center justify-center space-y-6">
-      <GhostIcon className="h-16 w-16 text-muted-foreground" />
-      <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-bold">No Subjects Found</h1>
-        <p className="text-muted-foreground">
-          Looks like there are no subjects available for Semester {resolvedParams.number}.
-        </p>
+  if (!subjects || subjects.length === 0) {
+    return (
+      <div className="flex h-[70vh] w-full flex-col items-center justify-center space-y-6">
+        <GhostIcon className="text-muted-foreground h-16 w-16" />
+        <div className="space-y-2 text-center">
+          <h1 className="text-2xl font-bold">No Subjects Found</h1>
+          <p className="text-muted-foreground">
+            Looks like there are no subjects available for Semester{" "}
+            {params.number}.
+          </p>
+        </div>
+        <Link href="/">
+          <Button>Go to Home</Button>
+        </Link>
       </div>
-      <Link href="/">
-        <Button>Go to Home</Button>
-      </Link>
-    </div>
-  );
-}
+    );
+  }
 
   const getMaterialType = (type: string) => {
     switch (type) {
@@ -72,7 +73,7 @@ if (!subjects || subjects.length === 0) {
     <div className="w-full space-y-6">
       <div className="space-y-2">
         <h1 className="text-primary text-3xl font-bold tracking-tight">
-          Semester {resolvedParams.number}
+          Semester {params.number}
         </h1>
         <p className="text-muted-foreground">
           Select a subject to view its materials
